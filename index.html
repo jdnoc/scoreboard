@@ -10,26 +10,28 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   </head>
   <body>
-      <div class="container">
+      <div class="container-fluid">
         <div class="row my-3 text-center">
           <div class="col-sm shadow border rounded my-1 mx-3">
             <h1 class="my-1">Home</h1>
             <h1 class="display-1" id="home">0</h1>
             <div class="my-3">
-              <button id="home-up-2" class="btn btn-lg my-1 mx-1 btn-primary">⬆ 2</button>
-              <button id="home-up-3" class="btn btn-lg my-1 mx-1 btn-primary">⬆ 3</button>
-              <button id="home-down-2" class="btn btn-lg my-1 mx-1 btn-danger">⬇ 2</button>
-              <button id="home-down-3" class="btn btn-lg my-1 mx-1 btn-danger">⬇ 3</button>    
+              <button id="home-up-2" class="btn btn-lg my-1 mx-1 btn-primary">+ 2</button>
+              <button id="home-up-3" class="btn btn-lg my-1 mx-1 btn-primary">+ 3</button>
+              <br>
+              <button id="home-down-2" class="btn my-1 mx-1 btn-danger">- 2</button>
+              <button id="home-down-3" class="btn my-1 mx-1 btn-danger">- 3</button>    
             </div>
           </div>
           <div class="col-sm shadow border rounded my-1 mx-3">
             <h1 class="my-1">Away</h1>
             <h1 class="display-1" id="away">0</h1>
             <div class="my-3">
-              <button id="away-up-2" class="btn btn-lg my-1 mx-1 btn-primary">⬆ 2</button>
-              <button id="away-up-3" class="btn btn-lg my-1 mx-1 btn-primary">⬆ 3</button>
-              <button id="away-down-2" class="btn btn-lg my-1 mx-1 btn-danger">⬇ 2</button>
-              <button id="away-down-3" class="btn btn-lg my-1 mx-1 btn-danger">⬇ 3</button>    
+              <button id="away-up-2" class="btn btn-lg my-1 mx-1 btn-primary">+ 2</button>
+              <button id="away-up-3" class="btn btn-lg my-1 mx-1 btn-primary">+ 3</button>
+              <br>
+              <button id="away-down-2" class="btn my-1 mx-1 btn-danger">- 2</button>
+              <button id="away-down-3" class="btn my-1 mx-1 btn-danger">- 3</button>    
             </div>
           </div>
         </div>
@@ -37,9 +39,10 @@
           <div class="col-sm shadow border rounded mx-3">
             <h1 id="time" class="display-1">10:00</h1>
             <div class="my-3">
-              <button id="startTimer" onClick="startClock();" class="btn my-1 mx-1 btn-primary">Start Clock</button>
-              <!-- <button id="startTimer" onClick="pauseClock();" class="btn my-1 mx-1 btn-secondry">Pause Clock</button> -->
-              <button id="startTimer" onClick="resetClock();" class="btn my-1 mx-1 btn-warning">Reset Clock</button>
+                <button id="startTimer" onClick="startClock();" class="btn my-1 mx-1 btn-primary">Start Clock</button>
+                <!-- <button id="startTimer" onClick="pauseClock();" class="btn my-1 mx-1 btn-secondry">Pause Clock</button> -->
+                <button id="startTimer" onClick="resetClock();" class="btn my-1 mx-1 btn-warning">Reset Clock</button>
+                <input id="minutes" min="1" class="mx-1" type="number" placeholder="Minutes" value="10" onchange="updateClock()">
             </div>
           </div>
         </div>
@@ -49,8 +52,8 @@
 
 <script>
 var clock;
-var tenMinutes = 60 * 10,
-        display = document.querySelector('#time');
+var minutes = 60 * 10;
+var display = document.querySelector('#time');
 
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
@@ -81,14 +84,19 @@ function scoreChange(team, points) {
 
 function startClock() {
   if(!clock) {
-    startTimer(tenMinutes, display);
+    startTimer(minutes, display);
   }
 }
 
 function resetClock() {
   clearInterval(clock);
   clock = 0;
-  display.textContent = "10:00"
+  display.textContent = minutes/60 + ":00";
+}
+
+function updateClock() {
+    minutes = document.getElementById('minutes').value * 60;
+    display.textContent = minutes/60 + ":00";
 }
 
 document.getElementById("home-up-2").addEventListener("click", function(){scoreChange("home", 2)});
